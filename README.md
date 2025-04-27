@@ -1,4 +1,4 @@
-# IEEE-CIS Fraud Detection-Kaggle Competition
+## IEEE-CIS Fraud Detection-Kaggle Competition
 ### მიმოხილვა:
   ეს პროექტი ეხებოდა თაღლითური ტრანზაქციების ამოცნობას უკვე არსებულ დატაზე დაკვირვებისა და დასწავლის დახმარებით. სხვადასხვა წყაროებიდან იყო ორი ცხრილი: თავად     ტრანზაქციების(590K) და ზოგიერთ ტრანზაქციაზე ასევე მოცემული იყო ინფორმაცია identityზე(140K). ქომფეთიშენის დეტალური აღწერა შეგიძლიათ იხილოთ [ლინკზე](https://www.kaggle.com/c/ieee-fraud-detection/overview)
 ### პრობლემის გადაჭრა
@@ -12,6 +12,7 @@
 ## რეპოზიტორიის სტრუქტურა
 რაც შეეხება მოდელებს, სულ გამოვიყენე ოთხი მოდელი, ესენია: logistic regression, RandomForest, XGBoost, AdaBoost. ამათგან ყველაზე კარგი შედეგი მომცა XGBoostმა. ყველა მათგანისთვის მაქვს შესაბამისი სახელის ipynb ფაილი(model_experiment_Basic_Log_regression, model_experiment_Random_Forest_using_transactions,  model_experiment_AdaBoost_transactions+identity, model_experiment_XGBoost_transactions+identity). ქვემოთ ნახავთ ამ ყველა ფაილისთვის დეტალურ აღწერას, რომელ რანზე რა კლასებს და ჰიპერპარამეტრებს ვიყენებდი და როგორ ვაუმჯობესებდი შედეგებს. ასევე, model_inference.ipynb-ში მაქვს საუკეთესო მოდელის გაშვება test.cvsზე და მისი შედეგები. 
 
+## Training
 ### model_experiment_Basic_Log_regression
 დასაწყისისთვის, გავტესტე მარტივი ლოჯისტიკური რეგრესია მხოლოდ train_transactionის საშუალებით, სანამ საქმეში aidentityს ჩავრთავდი. 
 * პირველი რანი "initial run" *: მისინგები შევავსე მოდით/მედიანით(დაიდროპა სვეტები, სადაც მისინგები>90%), გამოვიყენე ordinal ენქოუდინგი(one_hot იმ სვეტებისთვის, სადაც იუნიქი<3). ასევე გავაკეთე კორელაციის დადროპვა. ვალიდაციაზე roc-auc მივიღე 0.74. 
@@ -35,6 +36,16 @@
 * პირველი რანი "Basic" *: ნალებს ვცვლი ჩვეულებრივ მოდა/საშუალო. ვიყენებ იგივე ენქოდერ კლასს. ჰიპერპარამეტრებში უმეტესად ვუსეტავ დეფოლტ მნიშვნელობებს. მივიღე 0.93 ტრეინზე და 0.92 ვალიდაციაზე. 
 * მეორე რანი "filling missings with special values + scaler + more n_estimator": მისინგების შესავსებად ვიყენებ სფეშელ ველიუებს: -999/"Missing". ჰიპერპარამეტრებში გავაკეთე რამდენიმე ცვლილება: n_estimators გავზარდე 500მდე უკეთესი პერფორმანსისთვის. subsample მცირედით გავზარდე ვარიენსის თავიდან ასაცილებლად და ასევე, რაგდან გვაქვს ძალიან არა ბალანსირებული დატა, დავამატე პარამეტრი scale_pos_weight, რომელიც მეტ ყურადღებას მიაქცევს პოზიტივ კლასს და ცოტა შემცირდება ეს იმბალანსი. ამ რანში ტრეინის სქორი ავიდა 0.99ზე და ვალიდაციისა ავიდა 0.95ზე. მართალია ვალიდაციის ქულაც ახლოსაა, მაგრამ მაინც საშიშია ოვერფიტინგი.
 * მესამე რანი "": როგორც ზემოთ ავხსენი, მაინც საშიშროება იყო ოვერფიტინგის,ამიტომ, უკეთესი ჯენერალიზაციისთვის დავამატე reg_alpha,(L1 რეგულარიზაცია) და reg_lambda(L2 რეგულარიზაცია). შევამცირე learning_rate. მივამატე კორელაცია და ანდერსემფლინგი. მისინგნესის შესანარჩუნებლად ვიყენებ binary flagებს. n_estimators დავაყენე 300ზე. ვალიდაციაზე ქულა ოდნავ შემცირდა, თუმცა ოვერფიტინგის ნიშნები აღარ იყო. (roc_auc_train = 0.94 , roc_auc_val = 0.93, roc_auc_test = 0.92)
+
+## MLFlow Tracking
+### Logistic Regression
+* ამ მოდელის ექსპერიმენტი და მისი რანები იხილეთ [ლინკზე](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
+### RandomForest
+* ამ მოდელის ექსპერიმენტი და მისი რანები იხილეთ [ლინკზე](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/1?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
+### AdaBoost
+* ამ მოდელის შესაბამისი ექსპერიმენტი და მისი რანები იხილეთ [ლინკზე](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/3?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
+### XGBoost
+* ამ მოდელის შესაბამისი ექსპერიმენტი და მისი რანები იხილეთ [ლინკზე](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2?searchFilter=&orderByKey=tags.%60mlflow.runName%60&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
 
 
 
