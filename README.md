@@ -35,7 +35,7 @@
 ამ ფაილში ვტესტავ XGBoost მოდელს. აქაც, როგორც წინა მოდელში, დამერჯვის შემდეგ გამიჩნდა ბევრი ნალი, ამიტომ ვეცდები ხშირად ვცვალო მისინგების შევსების მიდგომა, რადგან წესით ამას გავლენა ექნება შედეგზე. 
 * "Basic" *: ნალებს ვცვლი ჩვეულებრივ მოდა/საშუალო. ვიყენებ იგივე ენქოდერ კლასს. ჰიპერპარამეტრებში უმეტესად ვუსეტავ დეფოლტ მნიშვნელობებს. მივიღე 0.93 ტრეინზე და 0.92 ვალიდაციაზე. 
 * "filling missings with special values + scaler + more n_estimator": მისინგების შესავსებად ვიყენებ სფეშელ ველიუებს: -999/"Missing". ჰიპერპარამეტრებში გავაკეთე რამდენიმე ცვლილება: n_estimators გავზარდე 500მდე უკეთესი პერფორმანსისთვის. subsample მცირედით გავზარდე ვარიენსის თავიდან ასაცილებლად და ასევე, რაგდან გვაქვს ძალიან არა ბალანსირებული დატა, დავამატე პარამეტრი scale_pos_weight, რომელიც მეტ ყურადღებას მიაქცევს პოზიტივ კლასს და ცოტა შემცირდება ეს იმბალანსი. ამ რანში ტრეინის სქორი ავიდა 0.99ზე და ვალიდაციისა ავიდა 0.95ზე. მართალია ვალიდაციის ქულაც ახლოსაა, მაგრამ მაინც საშიშია ოვერფიტინგი.
-* "reduce overfitting, add underSamling and corelation dropper": როგორც ზემოთ ავხსენი, მაინც საშიშროება იყო ოვერფიტინგის,ამიტომ, უკეთესი ჯენერალიზაციისთვის დავამატე reg_alpha,(L1 რეგულარიზაცია) და reg_lambda(L2 რეგულარიზაცია). შევამცირე learning_rate. მივამატე კორელაცია და ანდერსემფლინგი. მისინგნესის შესანარჩუნებლად ვიყენებ binary flagებს. n_estimators დავაყენე 300ზე. ვალიდაციაზე ქულა ოდნავ შემცირდა, თუმცა ოვერფიტინგის ნიშნები აღარ იყო. (roc_auc_train = 0.94 , roc_auc_val = 0.93, roc_auc_test = 0.92)
+* "reduce overfitting, add underSamling and corelation dropper": როგორც ზემოთ ავხსენი, მაინც საშიშროება იყო ოვერფიტინგის,ამიტომ, უკეთესი ჯენერალიზაციისთვის დავამატე reg_alpha,(L1 რეგულარიზაცია) და reg_lambda(L2 რეგულარიზაცია). შევამცირე learning_rate. მივამატე კორელაცია და ანდერსემფლინგი. მისინგნესის შესანარჩუნებლად ვიყენებ binary flagებს. n_estimators დავაყენე 300ზე. ვალიდაციაზე ქულა ოდნავ შემცირდა, თუმცა ოვერფიტინგის ნიშნები აღარ იყო. (roc_auc_train = 0.96 , roc_auc_val = 0.94, roc_auc_test = 0.93)
 
 ## MLFlow Tracking
 ### [Basic_Log_regression](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
@@ -53,7 +53,7 @@
 ### [XGBoost_transactions+identity](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2?searchFilter=&orderByKey=tags.%60mlflow.runName%60&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D)
 * [Basic](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2/runs/31c75f06c1694068b9c03d3f565b04b3)
 * [filling missings with special values + scaler + more n_estimator](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2/runs/396c2186cc6a46c4b319ef763e44521d)
-* [reduce overfitting, add underSamling and corelation dropper](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2/runs/829bc1fb5cf44b29bd616ef5c0d6f0dd)
+* [reduce overfitting, add underSamling and corelation dropper](https://dagshub.com/zeliz22/ML_Fraud-Detection.mlflow/#/experiments/2/runs/afa4b7930255478f86d7b77b93ef31f0)
 
 
 
